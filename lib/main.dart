@@ -1,12 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
+import 'package:redux/redux.dart';
 
 const String _name = "Your Name";
 
+//ACTIONS
+class OnMessageAddedAction {
+  final String newMessage;
+
+  OnMessageAddedAction(this.newMessage);
+}
+
+//APP_STATE
+@immutable
+class AppState {
+  final List<String> messages;
+
+  AppState({this.messages = const []});
+
+  AppState copyWith({List<String> messages}) {
+    return new AppState(messages: messages ?? this.messages);
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is AppState && runtimeType == other.runtimeType && messages == other.messages;
+
+  @override
+  int get hashCode => messages.hashCode;
+
+  @override
+  String toString() {
+    return 'AppState{messages: $messages}';
+  }
+}
+
+//REDUCERS
+AppState appStateReducer(AppState state, dynamic action) {
+  return new AppState(messages: messagesReducer(state.messages, action));
+}
+
+final messagesReducer = combineReducers<List<String>>([new TypedReducer<List<String>, OnMessageAddedAction>(_addMessage)]);
+
+List<String> _addMessage(List<String> messages, OnMessageAddedAction action) {
+  return new List.from(messages)..add(action.newMessage);
+}
+
+//APP
 void main() {
-  runApp(new FriendlychatApp());
+  final store = new Store<AppState>(appStateReducer);
+
+  runApp(new FriendlychatApp(store));
 }
 
 class FriendlychatApp extends StatelessWidget {
+  final Store<AppState> store;
+
+  FriendlychatApp(this.store);
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
