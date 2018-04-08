@@ -10,7 +10,7 @@ The app represents a basic Chat UI that uses the latest Redux with Dart 2 for:
 * Creating new messages
 * Displaying all messages
 
-Additionally, it features a more complex Redux setup that a store with a single int, and Enums as actions.
+Additionally, it features a more complex Redux setup than a store with a single int, and Enums as actions.
 
 This app shows you how to setup:
 * Actions with payloads
