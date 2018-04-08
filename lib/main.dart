@@ -17,9 +17,8 @@ class FriendlychatApp extends StatelessWidget {
 }
 
 class ChatScreen extends StatefulWidget {
-  //modified
-  @override //new
-  State createState() => new ChatScreenState(); //new
+  @override
+  State createState() => new ChatScreenState();
 }
 
 // Add the ChatScreenState class definition in main.dart.
@@ -28,42 +27,34 @@ class ChatScreenState extends State<ChatScreen> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
 
-  //new
-  @override //new
+  @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(title: new Text("Friendlychat")),
       body: new Column(
-        //modified
         children: <Widget>[
-          //new
           new Flexible(
-            //new
             child: new ListView.builder(
-              //new
-              padding: new EdgeInsets.all(8.0), //new
-              reverse: true, //new
-              itemBuilder: (_, int index) => _messages[index], //new
-              itemCount: _messages.length, //new
-            ), //new
-          ), //new
-          new Divider(height: 1.0), //new
+              padding: new EdgeInsets.all(8.0),
+              reverse: true,
+              itemBuilder: (_, int index) => _messages[index],
+              itemCount: _messages.length,
+            ),
+          ),
+          new Divider(height: 1.0),
           new Container(
-            //new
-            decoration: new BoxDecoration(color: Theme.of(context).cardColor), //new
-            child: _buildTextComposer(), //modified
-          ), //new
-        ], //new
-      ), //new
+            decoration: new BoxDecoration(color: Theme.of(context).cardColor),
+            child: _buildTextComposer(),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildTextComposer() {
     return new IconTheme(
-      //new
-      data: new IconThemeData(color: Theme.of(context).accentColor), //new
+      data: new IconThemeData(color: Theme.of(context).accentColor),
       child: new Container(
-        //modified
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: new Row(
           children: <Widget>[
@@ -80,20 +71,18 @@ class ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
-      ), //new
+      ),
     );
   }
 
   void _handleSubmitted(String text) {
     _textController.clear();
     ChatMessage message = new ChatMessage(
-      //new
-      text: text, //new
-    ); //new
+      text: text,
+    );
     setState(() {
-      //new
-      _messages.insert(0, message); //new
-    }); //new
+      _messages.insert(0, message);
+    });
   }
 }
 
