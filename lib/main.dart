@@ -20,7 +20,7 @@ class AppState {
   AppState({this.messages = const []});
 
   factory AppState.initialState() {
-    return new AppState(messages: const []);
+    return AppState(messages: const []);
   }
 
   AppState copyWith({List<String> messages}) {
@@ -55,13 +55,13 @@ List<String> _addMessage(List<String> messages, OnMessageAddedAction action) {
 void main() {
   final store = Store<AppState>(appStateReducer, initialState: AppState.initialState());
 
-  runApp(FriendlychatApp(store));
+  runApp(FriendlyChatFlutterReduxApp(store));
 }
 
-class FriendlychatApp extends StatelessWidget {
+class FriendlyChatFlutterReduxApp extends StatelessWidget {
   final Store<AppState> store;
 
-  FriendlychatApp(this.store);
+  FriendlyChatFlutterReduxApp(this.store);
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +89,7 @@ class ChatScreen extends StatelessWidget {
               children: <Widget>[
                 Flexible(
                     child: ListView.builder(
-                        padding: new EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         reverse: true,
                         itemCount: messages.length,
                         itemBuilder: (_, int idx) {
@@ -111,9 +111,9 @@ class ChatScreen extends StatelessWidget {
       data: IconThemeData(color: Theme.of(context).accentColor),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 8.0),
-        child: new StoreConnector<AppState, VoidCallback>(converter: (store) {
+        child: StoreConnector<AppState, VoidCallback>(converter: (store) {
           return () {
-            store.dispatch(new OnMessageAddedAction(_textController.text));
+            store.dispatch(OnMessageAddedAction(_textController.text));
             _textController.clear();
           };
         }, builder: (context, callback) {
