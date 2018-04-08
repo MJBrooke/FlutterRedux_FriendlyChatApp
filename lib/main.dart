@@ -7,6 +7,7 @@ const String _name = "Your Name";
 
 //ACTIONS
 class OnMessageAddedAction {
+  //Action payload
   final String newMessage;
 
   OnMessageAddedAction(this.newMessage);
@@ -16,6 +17,8 @@ class OnMessageAddedAction {
 @immutable
 class AppState {
   final List<String> messages;
+
+  //Add other state variables here...
 
   AppState({this.messages = const []});
 
@@ -42,10 +45,16 @@ class AppState {
 
 //REDUCERS
 AppState appStateReducer(AppState state, dynamic action) {
-  return AppState(messages: messagesReducer(state.messages, action));
+  return AppState(
+      //As new state variables are added, add new CombinedReducers here...
+      messages: messagesReducer(state.messages, action)
+  );
 }
 
-final messagesReducer = combineReducers<List<String>>([TypedReducer<List<String>, OnMessageAddedAction>(_addMessage)]);
+final messagesReducer = combineReducers<List<String>>([
+  //Add any extra operations/actions on messages here...
+  TypedReducer<List<String>, OnMessageAddedAction>(_addMessage)
+]);
 
 List<String> _addMessage(List<String> messages, OnMessageAddedAction action) {
   return List.from(messages)..insert(0, action.newMessage);
